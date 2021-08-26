@@ -1,11 +1,4 @@
-# node-music-web-api
-wrapping you tube music and sql through express to a unified whole
-# start the apis using
-npm start
-
-
-
-Prefix the endpoints below with your server url or localhost, such as http://localhost:3000/
+Prefix the endpoints below with https://yt-music-api.herokuapp.com/
 
 ## /api/yt
 This part of the API exposes the YouTube music API.
@@ -120,7 +113,40 @@ _get one artist by id_
 ##### method: GET
 ##### response:
 ```js
-
+{
+    "name": String,
+    "description": String,
+    "views": Number,
+    "products": {
+        "songs": {
+            "content": [],
+            "browseId": String,
+            "params": String
+        },
+        "albums": {
+            "content": [],
+            "browseId": String,
+            "params": String
+        },
+        "singles": {
+            "content": [],
+            "browseId": String,
+            "params": String
+        },
+        "videos": {
+            "content": [],
+            "browseId": String,
+            "params": String
+        }
+    },
+    "thumbnails": [
+        {
+            "url": String,
+            "width": Number,
+            "height": Number
+        }
+    ]
+}
 ```
 
 #### /api/yt/albums/_search+string_
@@ -154,7 +180,53 @@ _get one album by id_
 ##### method: GET
 ##### response:
 ```js
-
+{
+    "title": String,
+    "description": String,
+    "trackCount": Number,
+    "date": {
+        "year": Number,
+        "month": Number,
+        "day": Number
+    },
+    "duration": Number,
+    "artist": [
+        {
+            "name": String,
+            "browseId": String,
+            "thumbnails": [
+                 {
+                    "url": String,
+                    "width": Number,
+                    "height": Number
+                }
+            ]
+        }
+    ],
+    "tracks": [
+        {
+            "name": String,
+            "videoId": String,
+            "artistNames": String,
+            "duration": Number,
+            "thumbnails": [
+                 {
+                    "url": String,
+                    "width": Number,
+                    "height": Number
+                }
+            ]
+        }
+    ],
+    "thumbnails": [
+        {
+            "url": String,
+            "width": Number,
+            "height": Number
+        }
+    ],
+    "playlistId": String
+}
 ```
 
 #### /api/yt/videos/_search+string_
@@ -162,7 +234,29 @@ _contains youtube videos_
 ##### method: GET
 ##### response:
 ```js
-
+{
+    "content": [
+        {
+            "type": String,
+            "videoId": String,
+            "playlistId": String,
+            "name": String,
+            "author": String,
+            "views": String,
+            "duration": Number,
+            "thumbnails": {
+                "url": String,
+                "width": Number,
+                "height": Number
+            },
+            "params": String
+        }
+    ],
+    "contination": {
+        "continuation": String,
+        "clickTrackingParams": String
+    }
+}
 ```
 
 #### /api/yt/playlists/_search+string_
@@ -170,7 +264,28 @@ _contains youtube playlists_
 ##### method: GET
 ##### response:
 ```js
-
+{
+    "content": [
+        {
+            "type": String,
+            "browseId": String,
+            "title": String,
+            "author": String,
+            "trackCount": Number,
+            "thumbnails": [
+                {
+                    "url": String,
+                    "width": Number,
+                    "height": Number
+                }
+            ]
+        }
+    ],
+    "contination": {
+        "continuation": String,
+        "clickTrackingParams": String
+    }
+}
 ```
 
 #### /api/yt/playlist/_browseId_
@@ -178,6 +293,40 @@ _get one playlist by id_
 ##### method: GET
 ##### response:
 ```js
-
+{
+    "title": String,
+    "owner": String,
+    "trackCount": Number,
+    "dateYear": String,
+    "content": [
+        {
+            "videoId": String,
+            "name": String,
+            "author": {
+                "name": String,
+                "browseId": String
+            },
+            "duration": Number,
+            "thumbnails": {
+                "url": String,
+                "width": Number,
+                "height": Number
+            }
+        }
+    ],
+    "thumbnails": [
+        {
+            "url": String,
+            "width": Number,
+            "height": Number
+        }
+    ],
+    "continuation": [
+        {
+            "continuation": String,
+            "clickTrackingParams": String
+        }
+    ]
+}
 ```
 

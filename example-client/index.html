@@ -52,6 +52,321 @@
     <div id="yt-player"></div>
       <!-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> -->
     <!-- <lite-youtube videoid="guJLfqTFfIw" params="enablejsapi=1" autoload></lite-youtube> -->
+
+    <hr>
+
+    <h1>API Documentation</h1>
+    
+    <p>Prefix the endpoints below with <a href="https://yt-music-api.herokuapp.com/">https://yt-music-api.herokuapp.com/</a></p>
+<h2 id="-api-yt">/api/yt</h2>
+<p>This part of the API exposes the YouTube music API.
+Below is a list of endpoints you can use, with a non-exhaustive list of properties.</p>
+<h3 id="endpoints">endpoints</h3>
+<h4 id="-api-yt-search-_search-string_">/api/yt/search/<em>search+string</em></h4>
+<p><em>contains any (songs, albums, singles, artists, playlists, videos)</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"content"</span>: [
+        {
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"song"</span>,
+            <span class="hljs-attr">"videoId"</span>: String,
+            <span class="hljs-attr">"playlistId"</span>: String,
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"artist"</span>: {
+                <span class="hljs-attr">"name"</span>: String,
+                <span class="hljs-attr">"browseId"</span>: String
+            },
+            <span class="hljs-attr">"album"</span>: {
+                <span class="hljs-attr">"name"</span>: String,
+                <span class="hljs-attr">"browseId"</span>: String
+            },
+            <span class="hljs-attr">"duration"</span>: Number,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ],
+            <span class="hljs-attr">"params"</span>: <span class="hljs-string">"wAEB"</span>
+        }
+    ]
+}
+</code></pre>
+<h4 id="-api-yt-suggestions-_search-string_">/api/yt/suggestions/<em>search+string</em></h4>
+<p><em>contains suggestions (for autocomplete)</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">[
+    String,
+    String
+]
+</code></pre>
+<h3 id="-api-yt-songs-_search-string_">/api/yt/songs/<em>search+string</em></h3>
+<p><em>contains songs</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"content"</span>: [
+        {
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"song"</span>,
+            <span class="hljs-attr">"videoId"</span>: String,
+            <span class="hljs-attr">"playlistId"</span>: String,
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"artist"</span>: {
+                <span class="hljs-attr">"name"</span>: String,
+                <span class="hljs-attr">"browseId"</span>: String
+            },
+            <span class="hljs-attr">"album"</span>: {
+                <span class="hljs-attr">"name"</span>: String,
+                <span class="hljs-attr">"browseId"</span>: String
+            },
+            <span class="hljs-attr">"duration"</span>: Number,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ],
+            <span class="hljs-attr">"params"</span>: <span class="hljs-string">"wAEB"</span>
+        }
+    ]
+}
+</code></pre>
+<h4 id="-api-yt-artists-_search-string_">/api/yt/artists/<em>search+string</em></h4>
+<p><em>contains offical artists</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"content"</span>: [
+        {
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"artist"</span>,
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+<h4 id="-api-yt-artist-_browseid_">/api/yt/artist/<em>browseId</em></h4>
+<p><em>get one artist by id</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"name"</span>: String,
+    <span class="hljs-attr">"description"</span>: String,
+    <span class="hljs-attr">"views"</span>: Number,
+    <span class="hljs-attr">"products"</span>: {
+        <span class="hljs-attr">"songs"</span>: {
+            <span class="hljs-attr">"content"</span>: [],
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"params"</span>: String
+        },
+        <span class="hljs-attr">"albums"</span>: {
+            <span class="hljs-attr">"content"</span>: [],
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"params"</span>: String
+        },
+        <span class="hljs-attr">"singles"</span>: {
+            <span class="hljs-attr">"content"</span>: [],
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"params"</span>: String
+        },
+        <span class="hljs-attr">"videos"</span>: {
+            <span class="hljs-attr">"content"</span>: [],
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"params"</span>: String
+        }
+    },
+    <span class="hljs-attr">"thumbnails"</span>: [
+        {
+            <span class="hljs-attr">"url"</span>: String,
+            <span class="hljs-attr">"width"</span>: Number,
+            <span class="hljs-attr">"height"</span>: Number
+        }
+    ]
+}
+</code></pre>
+<h4 id="-api-yt-albums-_search-string_">/api/yt/albums/<em>search+string</em></h4>
+<p><em>contains offical albums</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"content"</span>: [
+        {
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"album"</span>,
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"playlistId"</span>: String,
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"artist"</span>: String,
+            <span class="hljs-attr">"year"</span>: String,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+<h4 id="-api-yt-album-_browseid_">/api/yt/album/<em>browseId</em></h4>
+<p><em>get one album by id</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"title"</span>: String,
+    <span class="hljs-attr">"description"</span>: String,
+    <span class="hljs-attr">"trackCount"</span>: Number,
+    <span class="hljs-attr">"date"</span>: {
+        <span class="hljs-attr">"year"</span>: Number,
+        <span class="hljs-attr">"month"</span>: Number,
+        <span class="hljs-attr">"day"</span>: Number
+    },
+    <span class="hljs-attr">"duration"</span>: Number,
+    <span class="hljs-attr">"artist"</span>: [
+        {
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                 {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ]
+        }
+    ],
+    <span class="hljs-attr">"tracks"</span>: [
+        {
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"videoId"</span>: String,
+            <span class="hljs-attr">"artistNames"</span>: String,
+            <span class="hljs-attr">"duration"</span>: Number,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                 {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ]
+        }
+    ],
+    <span class="hljs-attr">"thumbnails"</span>: [
+        {
+            <span class="hljs-attr">"url"</span>: String,
+            <span class="hljs-attr">"width"</span>: Number,
+            <span class="hljs-attr">"height"</span>: Number
+        }
+    ],
+    <span class="hljs-attr">"playlistId"</span>: String
+}
+</code></pre>
+<h4 id="-api-yt-videos-_search-string_">/api/yt/videos/<em>search+string</em></h4>
+<p><em>contains youtube videos</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"content"</span>: [
+        {
+            <span class="hljs-attr">"type"</span>: String,
+            <span class="hljs-attr">"videoId"</span>: String,
+            <span class="hljs-attr">"playlistId"</span>: String,
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"author"</span>: String,
+            <span class="hljs-attr">"views"</span>: String,
+            <span class="hljs-attr">"duration"</span>: Number,
+            <span class="hljs-attr">"thumbnails"</span>: {
+                <span class="hljs-attr">"url"</span>: String,
+                <span class="hljs-attr">"width"</span>: Number,
+                <span class="hljs-attr">"height"</span>: Number
+            },
+            <span class="hljs-attr">"params"</span>: String
+        }
+    ],
+    <span class="hljs-attr">"contination"</span>: {
+        <span class="hljs-attr">"continuation"</span>: String,
+        <span class="hljs-attr">"clickTrackingParams"</span>: String
+    }
+}
+</code></pre>
+<h4 id="-api-yt-playlists-_search-string_">/api/yt/playlists/<em>search+string</em></h4>
+<p><em>contains youtube playlists</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"content"</span>: [
+        {
+            <span class="hljs-attr">"type"</span>: String,
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"title"</span>: String,
+            <span class="hljs-attr">"author"</span>: String,
+            <span class="hljs-attr">"trackCount"</span>: Number,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ]
+        }
+    ],
+    <span class="hljs-attr">"contination"</span>: {
+        <span class="hljs-attr">"continuation"</span>: String,
+        <span class="hljs-attr">"clickTrackingParams"</span>: String
+    }
+}
+</code></pre>
+<h4 id="-api-yt-playlist-_browseid_">/api/yt/playlist/<em>browseId</em></h4>
+<p><em>get one playlist by id</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"title"</span>: String,
+    <span class="hljs-attr">"owner"</span>: String,
+    <span class="hljs-attr">"trackCount"</span>: Number,
+    <span class="hljs-attr">"dateYear"</span>: String,
+    <span class="hljs-attr">"content"</span>: [
+        {
+            <span class="hljs-attr">"videoId"</span>: String,
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"author"</span>: {
+                <span class="hljs-attr">"name"</span>: String,
+                <span class="hljs-attr">"browseId"</span>: String
+            },
+            <span class="hljs-attr">"duration"</span>: Number,
+            <span class="hljs-attr">"thumbnails"</span>: {
+                <span class="hljs-attr">"url"</span>: String,
+                <span class="hljs-attr">"width"</span>: Number,
+                <span class="hljs-attr">"height"</span>: Number
+            }
+        }
+    ],
+    <span class="hljs-attr">"thumbnails"</span>: [
+        {
+            <span class="hljs-attr">"url"</span>: String,
+            <span class="hljs-attr">"width"</span>: Number,
+            <span class="hljs-attr">"height"</span>: Number
+        }
+    ],
+    <span class="hljs-attr">"continuation"</span>: [
+        {
+            <span class="hljs-attr">"continuation"</span>: String,
+            <span class="hljs-attr">"clickTrackingParams"</span>: String
+        }
+    ]
+}
+</code></pre>
+
     
     <!-- imported script needed to use the YouTube Player -->
     <script src="https://www.youtube.com/iframe_api"></script>
