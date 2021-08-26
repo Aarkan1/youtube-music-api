@@ -1,0 +1,229 @@
+/*  stores the background-image url
+    in a CSS variable, because we can't
+    change styles in ::before from our JavaScript */
+:root {
+  --bg-cover: url("https://rockfarbror.se/wp-content/uploads/2016/09/In-Flames-The-end-the-truth.jpg")
+}
+
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 400;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+  background-color: rgb(29, 65, 77);
+  color: white;
+}
+
+i {
+  cursor: pointer;
+  color: white;
+  font-size: 1.5rem;
+}
+
+nav {
+  position: fixed;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: rgb(35, 76, 90);
+  border-bottom: 1px solid rgb(54, 103, 119);
+  padding: 10px 20px;
+  z-index: 10;
+}
+
+nav h1 {
+  font-size: 1.1em;
+  margin: 0;
+}
+
+/* creates a blurred background with the album cover */
+main::before {
+  background-image: var(--bg-cover);
+  background-size: cover;
+  background-position: center;
+  content: "";
+  position: fixed;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  z-index: -2;
+  opacity: 0.1;
+  filter: blur(10px);
+}
+
+main {
+  display: flex;
+  min-height: 100vh;
+  max-width: 900px;
+  flex: 1;
+  box-shadow: 0 0 5px 5px rgba(128, 128, 128, 0.445);
+}
+
+#playlist, #player {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 55px;
+  height: 100vh;
+}
+
+#playlist {
+  border-right: 2px solid darkgrey;
+  overflow-y: auto;
+}
+
+#playlist::-webkit-scrollbar {
+  display: none;
+}
+
+#playlist > form {
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+input#search, #playlist > form > button, input#search:-internal-autofill-selected {
+  background-color: rgba(51, 51, 51, 0.26);
+  border: 1px solid gray;
+  color:rgb(230, 230, 230)
+}
+
+#player {
+  position: relative;
+}
+
+/* 
+    PLAYLIST
+*/
+
+.selected-song {
+  outline: 3px solid rgb(219, 219, 219);
+}
+
+.song-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 10px;
+  border-top: 1px solid gray;
+  text-decoration: none;
+  color: white;
+}
+
+.song-title {
+  flex: 3;
+  margin-left: 10px;
+}
+
+.song-title p {
+  margin: 0;
+}
+
+.song-item .cover-art {
+  height: 60px;
+  width: 60px;
+}
+
+.cover-art {
+  background-image: url("https://rockfarbror.se/wp-content/uploads/2016/09/In-Flames-The-end-the-truth.jpg");
+  background-size: cover;
+  background-position: center;
+  height: 60px;
+  width: 60px;
+  border: 1px solid rgb(182, 182, 182);
+}
+
+/* 
+    PLAYER
+*/
+
+#player .cover-art {
+  width: 45vmin;
+  height: 45vmin;
+  margin: 0 auto;
+}
+
+.player-title, .player-progress, .player-controlls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding: 15px 20px;
+}
+
+.progress-bar-back, .progress-bar-done {
+  border-radius: 5px;
+  height: 5px;
+  cursor: pointer;
+}
+
+.progress-bar-back {
+  width: 100%;
+  background-color: #333;
+  margin: 0 10px;
+}
+
+.progress-bar-done {
+  width: 30%;
+  background-color: #fff;
+}
+
+.player-controlls {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+
+.player-controlls i {
+  flex: 1;
+}
+
+.player-controlls .fa-redo-alt {
+  text-align: start;
+}
+
+.player-controlls .fa-random {
+  text-align: end;
+}
+
+.player-controlls #play-button {
+  font-size: 3em;
+}
+
+.player-controlls .fa-backward, .player-controlls .fa-forward {
+  font-size: 1.6em;
+}
+
+#hover-time {
+  position: absolute;
+  margin-top: -35px;
+}
+#hover-time.hover {
+  background-color: rgb(35, 76, 90);
+  border: 1px solid rgb(54, 103, 119);
+  padding: 1px 4px;
+}
+
+/* 
+    MOBILE
+*/
+
+@media screen and (max-width: 600px) {
+  main {
+    flex-direction: column;
+  }
+
+  #player .cover-art {
+    width: 80vmin;
+    height: 80vmin;
+    margin: 0 auto;
+  }
+}

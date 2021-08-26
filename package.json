@@ -1,0 +1,29 @@
+{
+  "name": "music-web-api",
+  "version": "1.0.0",
+  "description": "wrapping you tube music and sql through express to a unified whole",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./server/index.js",
+    "start-api": "node ./api/index.js",
+    "test": "newman run tests/node-music-web-api.postman_collection.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WeeHorse/node-music-web-api.git"
+  },
+  "author": "nodehill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WeeHorse/node-music-web-api/issues"
+  },
+  "homepage": "https://github.com/WeeHorse/node-music-web-api#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "better-sqlite3": "^7.4.0",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "youtube-music-api": "^1.0.6"
+  }
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <nav>
+    <a href="#playlist">
+      <i class="fas fa-chevron-left"></i>
+    </a>
+    <h1>Playlist - The Truth</h1>
+    <i class="fas fa-ellipsis-v"></i>
+  </nav>
+
+  <!--  this div will contain the YouTube Player 
+        when script gets loaded -->
+  <div id="yt-player"></div>
+  
+  <main>
+    
+    <!-- PLAYLIST -->
+    
+    
+    <section id="playlist">
+      <form>
+        <input type="text" id="search">
+        <button>🔎</button>
+      </form>
+      <section id="songs"></section>
+    </section>
+    
+    <!-- PLAYER -->
+    
+    <section id="player">
+      <div class="cover-art"></div>
+
+      <div class="player-title"></div>
+
+      <div class="player-progress">
+        <span id="hover-time"></span>
+        <p id="time-played">0:40</p>
+        <div class="progress-bar-back">
+          <div class="progress-bar-done"></div>
+        </div>
+        <p id="time-duration">3:42</p>
+      </div>
+
+      <div class="player-controlls">
+        <i class="fas fa-redo-alt"></i>
+        <i class="fas fa-backward"></i>
+        <i id="play-button" class="fas fa-play-circle"></i>
+        <i class="fas fa-forward"></i>
+        <i class="fas fa-random"></i>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- imported script needed to use the YouTube Player -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="./main.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example client</title>
+  <!-- <link rel="stylesheet" href="/lite-yt-embed.css"> -->
+  <script src="/main.js"></script>
+  <style>
+    body{
+      margin: 0;
+      padding:2vh 2vw;
+    }
+    *{
+      box-sizing: border-box;
+    }
+    div{
+      margin: 2vh 0;
+    }
+    textarea{
+      width:96vw;
+      height:50vh;
+    }
+  </style>
+</head>
+<body>
+  <h1>Examples using YouTube Music api</h1>
+  
+  <div>
+    <label>Raw search using /api/yt/search/:searchString</label>
+    <input id="search" type="search" placeholder="enter search string">
+    <button onclick="search()">Search for any results</button>
+  </div>
+  
+  <div>
+    <label>Song search using /api/yt/songs/:searchString</label>
+    <input id="search-songs" type="search" placeholder="enter search string">
+    <button onclick="searchSongs()">Search for songs</button>
+  </div>
+  
+  <textarea></textarea>
+  
+  <div>
+    <label>Play song with video-id (using youtube player)</label>
+    <input id="song-id" type="text" placeholder="enter video-id">
+    <button onclick="playSong()">Play song</button>
+  </div>
+  
+  <!--  this div will contain the YouTube Player
+    when script gets loaded -->
+    <div id="yt-player"></div>
+      <!-- <lite-youtube videoid="guJLfqTFfIw"></lite-youtube> -->
+    <!-- <lite-youtube videoid="guJLfqTFfIw" params="enablejsapi=1" autoload></lite-youtube> -->
+    
+    <!-- imported script needed to use the YouTube Player -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <!-- <script src="/lite-yt-embed.js"></script> -->
+    <!-- <script type="module" src="https://cdn.jsdelivr.net/npm/@justinribeiro/lite-youtube@0.6.2/lite-youtube.js"></script> -->
+  </body>
+  </html>
