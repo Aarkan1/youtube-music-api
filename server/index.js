@@ -25,7 +25,7 @@ app.use( session( {
 } ) )
 
 const DbHandler = require('./DbHandler')
-let db = new DbHandler('./data.db')
+let db = new DbHandler('./server/data.db')
 
 // load apis / endpoints
 
@@ -36,7 +36,7 @@ require('./data-rest-endpoints.js')(app, db)
 
 // example client
 const path = require('path')
-app.use(express.static(path.join(__dirname, '../client')))
+app.use(express.static(path.join(__dirname, '../example-client')))
 
 // start the server
 app.listen(port, () => {

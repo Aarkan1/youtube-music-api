@@ -7,22 +7,8 @@
   <title>Example client</title>
   <!-- <link rel="stylesheet" href="/lite-yt-embed.css"> -->
   <script src="/main.js"></script>
-  <style>
-    body{
-      margin: 0;
-      padding:2vh 2vw;
-    }
-    *{
-      box-sizing: border-box;
-    }
-    div{
-      margin: 2vh 0;
-    }
-    textarea{
-      width:96vw;
-      height:50vh;
-    }
-  </style>
+  <link rel="stylesheet" href="/style.css">
+  <!-- <link rel="stylesheet" href="/tomorrow.css"> -->
 </head>
 <body>
   <h1>Examples using YouTube Music api</h1>
@@ -57,16 +43,17 @@
 
     <h1>API Documentation</h1>
     
-    <p>Prefix the endpoints below with <a href="https://yt-music-api.herokuapp.com/">https://yt-music-api.herokuapp.com/</a></p>
-<h2 id="-api-yt">/api/yt</h2>
+    <p>Prefix the endpoints below with <code>https://yt-music-api.herokuapp.com</code></p>
+    <div>Example search artists: <code>https://yt-music-api.herokuapp.com/api/yt/artists/metallica</code></div>
+    <div>Example search songs: <code>https://yt-music-api.herokuapp.com/api/yt/songs/bohemian%20rapsody</code></div>
+    <h2 id="endpoints">endpoints</h2>
 <p>This part of the API exposes the YouTube music API.
 Below is a list of endpoints you can use, with a non-exhaustive list of properties.</p>
-<h3 id="endpoints">endpoints</h3>
 <h4 id="-api-yt-search-_search-string_">/api/yt/search/<em>search+string</em></h4>
 <p><em>contains any (songs, albums, singles, artists, playlists, videos)</em></p>
 <h5 id="method-get">method: GET</h5>
 <h5 id="response-">response:</h5>
-<pre><code class="lang-js">{
+<pre><code class="lang-json">{
     <span class="hljs-attr">"content"</span>: [
         {
             <span class="hljs-attr">"type"</span>: <span class="hljs-string">"song"</span>,
@@ -103,7 +90,7 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
     String
 ]
 </code></pre>
-<h3 id="-api-yt-songs-_search-string_">/api/yt/songs/<em>search+string</em></h3>
+<h4 id="-api-yt-songs-_search-string_">/api/yt/songs/<em>search+string</em></h4>
 <p><em>contains songs</em></p>
 <h5 id="method-get">method: GET</h5>
 <h5 id="response-">response:</h5>

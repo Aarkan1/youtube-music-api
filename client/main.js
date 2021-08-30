@@ -58,6 +58,7 @@ function onPlayerStateChange(event) {
   if(event.data == YT.PlayerState.ENDED && player.getCurrentTime() >= player.getDuration()) {
     return nextSong()
   }
+
   if (event.data != YT.PlayerState.PLAYING) return
   
   setSong()
@@ -96,7 +97,7 @@ function fillPlaylist() {
 // function to update current song info
 async function setSong() {
   let song;
-  if(!songId) {
+  // if(!songId) {
     playlist.querySelectorAll('a').forEach(a => {
       a.classList.remove('selected-song')
       a.querySelector('i').className = 'fas fa-play-circle'
@@ -115,15 +116,15 @@ async function setSong() {
     }
     history.pushState(null, null, location.pathname + urlQuery)
 
-    fetch('/api/yt/song', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(song)
-    })
-  } else {
-    let res = await fetch('/api/yt/song/' + songId)
-    song = await res.json()
-  }
+    // fetch('/api/yt/song', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(song)
+    // })
+  // } else {
+    // let res = await fetch('/api/yt/song/' + songId)
+    // song = await res.json()
+  // }
 
   playerAlbum.style.setProperty('background-image', `url(https://i.ytimg.com/vi/${songId}/hqdefault.jpg)`)
 

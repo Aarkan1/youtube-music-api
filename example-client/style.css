@@ -1,0 +1,43 @@
+body{
+  margin: 0;
+  padding:2vh 2vw;
+  font-family: Arial, Helvetica, sans-serif;
+}
+*{
+  box-sizing: border-box;
+}
+div{
+  margin: 2vh 0;
+}
+textarea{
+  width:96vw;
+  height:50vh;
+}
+
+pre {
+  border-radius: 7px;
+  background-color: #eee;
+  outline: 1px solid #ccc;
+  padding: 5px; margin:
+  5px;
+}
+
+.hljs-attr {
+  color: #008000;
+}
+
+h4 {
+  margin: 0;
+  margin-top: 3em;
+  font-size: 1.3em;
+}
+
+p {
+  margin-top: 0;
+  font-size: 1.1em;
+}
+
+h5 {
+  margin: 0;
+  font-size: 1em;
+}

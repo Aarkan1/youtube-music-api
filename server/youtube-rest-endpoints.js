@@ -4,6 +4,15 @@ const YoutubeMusicApi = require('youtube-music-api')
 const api = new YoutubeMusicApi()
 api.initalize()
 
+function createTables(db) {
+  db.query(`
+    CREATE TABLE IF NOT EXISTS ytm_cache (
+      request_url TEXT PRIMARY KEY,
+      response_body TEXT NOT NULL
+    )
+  `)
+}
+
 async function ytmCached(req, res, db, methodName, argsToUse){
   // attempt to get from cached (notice that an empty response body will always pass through to fetch new)
   let data = await db.query("SELECT * FROM ytm_cache WHERE request_url = ?", req.originalUrl)
@@ -26,6 +35,7 @@ async function ytmCached(req, res, db, methodName, argsToUse){
 }
 
 module.exports = (app, db) => {
+  createTables(db)
 
   // general search (useful for getting a mixed search result with songs, albums, playlists, videos, artists..)
   app.get('/api/yt/search/:searchString', async (req, res) => {
@@ -45,18 +55,18 @@ module.exports = (app, db) => {
     res.json(data)
   })
 
-  // get song by id
-  app.get('/api/yt/song/:songId', async (req, res) => {
-    let data = await db.query("SELECT value FROM ytm_cache_songs WHERE key = ?", req.params.songId).catch(() => {})
-    res.json(data[0] ? JSON.parse(data[0].value) : {})
-  })
+  // // get song by id
+  // app.get('/api/yt/song/:songId', async (req, res) => {
+  //   let data = await db.query("SELECT value FROM ytm_cache_songs WHERE key = ?", req.params.songId).catch(() => {})
+  //   res.json(data[0] ? JSON.parse(data[0].value) : {})
+  // })
 
-  // cache song
-  app.post('/api/yt/song', async (req, res) => {
-    let song = req.body
-    await db.query("INSERT INTO ytm_cache_songs VALUES(?, ?)", [song.videoId, JSON.stringify(song)]).catch(() => {})
-    res.json({message: 'ok'})
-  })
+  // // cache song
+  // app.post('/api/yt/song', async (req, res) => {
+  //   let song = req.body
+  //   await db.query("INSERT INTO ytm_cache_songs VALUES(?, ?)", [song.videoId, JSON.stringify(song)]).catch(() => {})
+  //   res.json({message: 'ok'})
+  // })
 
   // there is no get song by id because you are supposed to do it direclty in the client
 
