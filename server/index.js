@@ -5,6 +5,10 @@ const port = process.env.PORT || 3000
 const express = require('express')
 const app = express()
 
+// add CORS
+const cors = require('cors')
+app.use(cors())
+
 // add body-parser to express
 // register as middleware
 app.use( express.json() )
