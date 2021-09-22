@@ -4,6 +4,13 @@ Prefix the endpoints below with https://yt-music-api.herokuapp.com/
 This part of the API exposes the YouTube music API.
 Below is a list of endpoints you can use, with a non-exhaustive list of properties.
 
+### next page
+All responses returns a limit of 20 results. To get the next page you simply add a stringified continuation from the last search as a '?next=' query.
+```js
+'https://yt-music-api.herokuapp.com/api/yt/songs/bohemian%20rapsody?next=' + JSON.stringify(response.continuation)
+```
+This fetch will result in the next 20 items, and a new continuation object the you can use to get the next page.
+
 ### endpoints
 
 #### /api/yt/search/_search+string_
@@ -81,7 +88,11 @@ _contains songs_
             ],
             "params": "wAEB"
         }
-    ]
+    ],
+    "continuation": {
+        "continuation": String,
+        "clickTrackingParams": String
+    }
 }
 ```
 
@@ -104,7 +115,11 @@ _contains offical artists_
                 }
             ]
         }
-    ]
+    ],
+    "continuation": {
+        "continuation": String,
+        "clickTrackingParams": String
+    }
 }
 ```
 
@@ -172,7 +187,7 @@ _contains youtube videos_
             "params": String
         }
     ],
-    "contination": {
+    "continuation": {
         "continuation": String,
         "clickTrackingParams": String
     }
@@ -201,7 +216,7 @@ _contains youtube playlists_
             ]
         }
     ],
-    "contination": {
+    "continuation": {
         "continuation": String,
         "clickTrackingParams": String
     }
@@ -240,13 +255,6 @@ _get one playlist by id_
             "width": Number,
             "height": Number
         }
-    ],
-    "continuation": [
-        {
-            "continuation": String,
-            "clickTrackingParams": String
-        }
     ]
 }
 ```
-

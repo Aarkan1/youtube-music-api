@@ -43,3 +43,18 @@ function onYouTubeIframeAPIReady() {
 function onPlayerStateChange(event) {
   if (event.data != YT.PlayerState.PLAYING) return
 }
+
+test()
+async function test(token) {
+  let category = 'songs'
+  let search = 'in flames'
+
+  let res = await fetch('/api/yt/'+category+'/'+search + (token ? `?next=${JSON.stringify(token)}` : ''))
+  res = await res.json();
+  console.log(res);
+
+  // test(res.continuation)
+  setTimeout(async () => {
+    // test(res.continuation)
+  }, 1000);
+}

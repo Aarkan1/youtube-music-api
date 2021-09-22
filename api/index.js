@@ -208,6 +208,51 @@ class YoutubeMusicApi {
     });
   }
 
+  searchNext(continuation, categoryName) {
+    return new Promise((resolve, reject) => {
+      var result = {};
+      this._createApiRequest(
+        "search",
+        {},
+        {
+          ctoken: continuation.continuation,
+          continuation: continuation.continuation,
+          itct: continuation.clickTrackingParams,
+        }
+      )
+        .then((context) => {
+          try {
+            switch (_.upperCase(categoryName)) {
+              case "SONG":
+                result = parsers.parseSongSearchResult(context);
+                break;
+              case "VIDEO":
+                result = parsers.parseVideoSearchResult(context);
+                break;
+              case "ALBUM":
+                result = parsers.parseAlbumSearchResult(context);
+                break;
+              case "ARTIST":
+                result = parsers.parseArtistSearchResult(context);
+                break;
+              case "PLAYLIST":
+                result = parsers.parsePlaylistSearchResult(context);
+                break;
+              default:
+                result = parsers.parseSearchResult(context);
+                break;
+            }
+            resolve(result);
+          } catch (error) {
+            return resolve({
+              error: error.message,
+            });
+          }
+        })
+        .catch((error) => reject(error));
+    });
+  }
+
   getAlbum(browseId) {
     if (_.startsWith(browseId, "MPREb")) {
       return new Promise((resolve, reject) => {

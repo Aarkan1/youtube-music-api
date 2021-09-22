@@ -46,6 +46,15 @@
     <p>Prefix the endpoints below with <code>https://yt-music-api.herokuapp.com</code></p>
     <div>Example search artists: <code>https://yt-music-api.herokuapp.com/api/yt/artists/metallica</code></div>
     <div>Example search songs: <code>https://yt-music-api.herokuapp.com/api/yt/songs/bohemian%20rapsody</code></div>
+
+    <br>
+    <h2>next page</h2>
+    <p>All responses returns a limit of 20 results. To get the next page you simply add a stringified continuation from the last search as a '?next=' query.</p>
+    <code>'https://yt-music-api.herokuapp.com/api/yt/songs/bohemian%20rapsody?next=' + JSON.stringify(response.continuation)</code>
+    <br>
+    <br>
+    <p>This fetch will result in the next 20 items, and a new continuation object the you can use to get the next page.</p>
+    <br>
     <h2 id="endpoints">endpoints</h2>
 <p>This part of the API exposes the YouTube music API.
 Below is a list of endpoints you can use, with a non-exhaustive list of properties.</p>

@@ -197,8 +197,8 @@ exports.parseSongSearchResult = (context) => {
 exports.parseVideoSearchResult = (context) => {
     const result = {
         content: [],
-        contination: utils.fv(
-            context, 'nextContinuationData'
+        continuation: utils.fv(
+            context, 'nextContinuationData', true
         )
     }
 
@@ -230,8 +230,8 @@ exports.parseVideoSearchResult = (context) => {
 exports.parseAlbumSearchResult = (context) => {
     const result = {
         content: [],
-        contination: utils.fv(
-            context, 'nextContinuationData'
+        continuation: utils.fv(
+            context, 'nextContinuationData', true
         )
     }
 
@@ -266,8 +266,8 @@ exports.parseAlbumSearchResult = (context) => {
 exports.parseArtistSearchResult = (context) => {
     const result = {
         content: [],
-        contination: utils.fv(
-            context, 'nextContinuationData'
+        continuation: utils.fv(
+            context, 'nextContinuationData', true
         )
     }
 
@@ -294,8 +294,8 @@ exports.parseArtistSearchResult = (context) => {
 exports.parsePlaylistSearchResult = (context) => {
     const result = {
         content: [],
-        contination: utils.fv(
-            context, 'nextContinuationData'
+        continuation: utils.fv(
+            context, 'nextContinuationData', true
         )
     }
 
@@ -683,8 +683,8 @@ exports.parseNextPanel = context => {
         playlistId: '',
         content: [],
         currentIndex: 0,
-        contination: utils.fv(
-            context, 'nextContinuationData'
+        continuation: utils.fv(
+            context, 'nextContinuationData', true
         )
     }
 

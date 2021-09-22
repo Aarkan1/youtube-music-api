@@ -54,7 +54,13 @@ module.exports = (app, db) => {
   // WORKS
   // search for songs
   app.get('/api/yt/songs/:searchString', async (req, res) => {
-    let data = await ytmCached(req, res, db, 'search', [req.params.searchString, "song"])
+    let data
+    let next = req.query.next
+    if (next && next != 'undefined') {
+      data = await ytmCached(req, res, db, 'searchNext', [JSON.parse(next), "song"])
+    } else {
+      data = await ytmCached(req, res, db, 'search', [req.params.searchString, "song"])
+    }
     res.json(data)
   })
   // there is no get song by id because you are supposed to do it directly in the client
@@ -76,7 +82,13 @@ module.exports = (app, db) => {
   // WORKS
   // search for artists
   app.get('/api/yt/artists/:searchString', async (req, res) => {
-    let data = await ytmCached(req, res, db, 'search', [req.params.searchString, "artist"])
+    let data
+    let next = req.query.next
+    if (next && next != 'undefined') {
+      data = await ytmCached(req, res, db, 'searchNext', [JSON.parse(next), "artist"])
+    } else {
+      data = await ytmCached(req, res, db, 'search', [req.params.searchString, "artist"])
+    }
     res.json(data)
   })
 
@@ -104,7 +116,13 @@ module.exports = (app, db) => {
   // WORKS
   // search for videos
   app.get('/api/yt/videos/:searchString', async (req, res) => {
-    let data = await ytmCached(req, res, db, 'search', [req.params.searchString, "video"])
+    let data
+    let next = req.query.next
+    if (next && next != 'undefined') {
+      data = await ytmCached(req, res, db, 'searchNext', [JSON.parse(next), "video"])
+    } else {
+      data = await ytmCached(req, res, db, 'search', [req.params.searchString, "video"])
+    }
     res.json(data)
   })
   // there is no get video by id because you are supposed to do it directly in the client
@@ -112,7 +130,13 @@ module.exports = (app, db) => {
   // WORKS
   // search for playlists
   app.get('/api/yt/playlists/:searchString', async (req, res) => {
-    let data = await ytmCached(req, res, db, 'search', [req.params.searchString, "playlist"])
+    let data
+    let next = req.query.next
+    if (next && next != 'undefined') {
+      data = await ytmCached(req, res, db, 'searchNext', [JSON.parse(next), "playlist"])
+    } else {
+      data = await ytmCached(req, res, db, 'search', [req.params.searchString, "playlist"])
+    }
     res.json(data)
   })
 
