@@ -1,4 +1,9 @@
 const _ = require('lodash')
+const util = require('util')
+
+exports.logDeep = (object) => {
+    console.log(util.inspect(object, {showHidden: false, depth: null, colors: true}))
+}
 
 exports.fv = (input, query, justOne = false) => {
     const iterate = (x, y) => {
@@ -30,6 +35,30 @@ exports.fv = (input, query, justOne = false) => {
         v = iterate(v, d[i])
     }
     return v
+}
+
+exports.albumDurationToMs = d => {
+    let hm = d.split(' hour, ')
+    let hour, minutes
+
+    if(hm.length > 1) {
+        hour = parseInt(hm[0])
+        minutes = parseInt(hm[1].replace(' minutes', ''))
+    } else {
+        minutes = parseInt(hm[0].replace(' minutes', ''))
+    }
+
+    if(hour) {
+        return (hour * 60 * 60 * 1000) + (minutes * 60 * 1000)
+    } 
+    return minutes * 60 * 1000
+}
+
+exports.m2ms = d => {
+    let [minutes, seconds] = d.split(':')
+    minutes *= (60 * 1000)
+    seconds *= 1000
+    return minutes + seconds
 }
 
 exports.hms2ms = v => {

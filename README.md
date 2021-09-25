@@ -5,11 +5,11 @@ This part of the API exposes the YouTube music API.
 Below is a list of endpoints you can use, with a non-exhaustive list of properties.
 
 ### next page
-All responses returns a limit of 20 results. To get the next page you simply add a stringified continuation from the last search as a '?next=' query.
+All responses returns a limit of 20 results. To get the next page you simply add the *response.next* string from the last search as a *'?next='* query.
 ```js
-'https://yt-music-api.herokuapp.com/api/yt/songs/bohemian%20rapsody?next=' + JSON.stringify(response.continuation)
+'https://yt-music-api.herokuapp.com/api/yt/songs/nothing%20else%20matters?next=' + response.next
 ```
-This fetch will result in the next 20 items, and a new continuation object the you can use to get the next page.
+This response will result in the next 20 items, and a new *response.next* string that you can use to get the next page.
 
 ### endpoints
 
@@ -23,7 +23,6 @@ _contains any (songs, albums, singles, artists, playlists, videos)_
         {
             "type": "song",
             "videoId": String,
-            "playlistId": String,
             "name": String,
             "artist": {
                 "name": String,
@@ -58,7 +57,7 @@ _contains suggestions (for autocomplete)_
 ]
 ```
 
-### /api/yt/songs/_search+string_
+#### /api/yt/songs/_search+string_
 _contains songs_
 ##### method: GET
 ##### response:
@@ -68,7 +67,6 @@ _contains songs_
         {
             "type": "song",
             "videoId": String,
-            "playlistId": String,
             "name": String,
             "artist": {
                 "name": String,
@@ -89,10 +87,36 @@ _contains songs_
             "params": "wAEB"
         }
     ],
-    "continuation": {
-        "continuation": String,
-        "clickTrackingParams": String
-    }
+    "next": String
+}
+```
+
+#### /api/yt/song/_videoId_
+_get one song by id_
+##### method: GET
+##### response:
+```js
+{
+    "type": "song",
+    "videoId": String,
+    "name": String,
+    "artist": {
+        "name": String,
+        "browseId": String
+    },
+    "album": {
+        "name": String,
+        "browseId": String
+    },
+    "duration": Number,
+    "thumbnails": [
+        {
+            "url": String,
+            "width": Number,
+            "height": Number
+        }
+    ],
+    "params": "wAEB"
 }
 ```
 
@@ -116,10 +140,7 @@ _contains offical artists_
             ]
         }
     ],
-    "continuation": {
-        "continuation": String,
-        "clickTrackingParams": String
-    }
+    "next": String
 }
 ```
 
@@ -164,6 +185,73 @@ _get one artist by id_
 }
 ```
 
+#### /api/yt/albums/_search+string_
+_contains offical albums_
+##### method: GET
+##### response:
+```js
+{
+    "content": [
+        {
+            "type": "album",
+            "browseId": String,
+            "name": String,
+            "artist": String,
+            "year": String,
+            "thumbnails": [
+                {
+                    "url": String,
+                    "width": Number,
+                    "height": Number
+                }
+            ]
+        }
+    ],
+    "next": String
+}
+```
+
+#### /api/yt/album/_browseId_
+_get one album by id_
+##### method: GET
+##### response:
+```js
+{
+    "title": String,
+    "description": String,
+    "trackCount": Number,
+    "year": String
+    "duration": Number,
+    "artist": [
+        {
+            "name": String,
+            "browseId": String,
+            "thumbnails": [
+                 {
+                    "url": String,
+                    "width": Number,
+                    "height": Number
+                }
+            ]
+        }
+    ],
+    "tracks": [
+        {
+            "name": String,
+            "videoId": String,
+            "duration": Number
+        }
+    ],
+    "thumbnails": [
+        {
+            "url": String,
+            "width": Number,
+            "height": Number
+        }
+    ]
+}
+```
+
 #### /api/yt/videos/_search+string_
 _contains youtube videos_
 ##### method: GET
@@ -174,7 +262,6 @@ _contains youtube videos_
         {
             "type": String,
             "videoId": String,
-            "playlistId": String,
             "name": String,
             "author": String,
             "views": String,
@@ -187,10 +274,28 @@ _contains youtube videos_
             "params": String
         }
     ],
-    "continuation": {
-        "continuation": String,
-        "clickTrackingParams": String
-    }
+    "next": String
+}
+```
+
+#### /api/yt/video/_videoId_
+_get one video by id_
+##### method: GET
+##### response:
+```js
+{
+    "type": String,
+    "videoId": String,
+    "name": String,
+    "author": String,
+    "views": String,
+    "duration": Number,
+    "thumbnails": {
+        "url": String,
+        "width": Number,
+        "height": Number
+    },
+    "params": String
 }
 ```
 
@@ -216,10 +321,7 @@ _contains youtube playlists_
             ]
         }
     ],
-    "continuation": {
-        "continuation": String,
-        "clickTrackingParams": String
-    }
+    "next": String
 }
 ```
 
@@ -232,7 +334,7 @@ _get one playlist by id_
     "title": String,
     "owner": String,
     "trackCount": Number,
-    "dateYear": String,
+    "year": String,
     "content": [
         {
             "videoId": String,

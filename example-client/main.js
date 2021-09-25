@@ -44,17 +44,14 @@ function onPlayerStateChange(event) {
   if (event.data != YT.PlayerState.PLAYING) return
 }
 
-test()
-async function test(token) {
+test().then(res => test(res.next))
+
+async function test(next) {
   let category = 'songs'
   let search = 'in flames'
 
-  let res = await fetch('/api/yt/'+category+'/'+search + (token ? `?next=${JSON.stringify(token)}` : ''))
+  let res = await fetch('/api/yt/'+category+'/'+search + (next ? `?next=${next}` : ''))
   res = await res.json();
   console.log(res);
-
-  // test(res.continuation)
-  setTimeout(async () => {
-    // test(res.continuation)
-  }, 1000);
+  return res
 }

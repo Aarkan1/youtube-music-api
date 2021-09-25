@@ -44,16 +44,16 @@
     <h1>API Documentation</h1>
     
     <p>Prefix the endpoints below with <code>https://yt-music-api.herokuapp.com</code></p>
-    <div>Example search artists: <code>https://yt-music-api.herokuapp.com/api/yt/artists/metallica</code></div>
-    <div>Example search songs: <code>https://yt-music-api.herokuapp.com/api/yt/songs/bohemian%20rapsody</code></div>
+    <div>Example search artists: <br><code>https://yt-music-api.herokuapp.com/api/yt/artists/metallica</code></div>
+    <div>Example search songs: <br><code>https://yt-music-api.herokuapp.com/api/yt/songs/nothing%20else%20matters</code></div>
 
     <br>
     <h2>next page</h2>
-    <p>All responses returns a limit of 20 results. To get the next page you simply add a stringified continuation from the last search as a '?next=' query.</p>
-    <code>'https://yt-music-api.herokuapp.com/api/yt/songs/bohemian%20rapsody?next=' + JSON.stringify(response.continuation)</code>
+    <p>All responses returns a limit of 20 results. To get the next page you simply add the <i>response.next</i> string from the last search as a <i>'?next='</i> query.</p>
+    <code>'https://yt-music-api.herokuapp.com/api/yt/songs/nothing%20else%20matters?next=' + response.next</code>
     <br>
     <br>
-    <p>This fetch will result in the next 20 items, and a new continuation object the you can use to get the next page.</p>
+    <p>This response will result in the next 20 items, and a new <i>response.next</i> string that you can use to get the next page.</p>
     <br>
     <h2 id="endpoints">endpoints</h2>
 <p>This part of the API exposes the YouTube music API.
@@ -67,7 +67,6 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
         {
             <span class="hljs-attr">"type"</span>: <span class="hljs-string">"song"</span>,
             <span class="hljs-attr">"videoId"</span>: String,
-            <span class="hljs-attr">"playlistId"</span>: String,
             <span class="hljs-attr">"name"</span>: String,
             <span class="hljs-attr">"artist"</span>: {
                 <span class="hljs-attr">"name"</span>: String,
@@ -108,7 +107,6 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
         {
             <span class="hljs-attr">"type"</span>: <span class="hljs-string">"song"</span>,
             <span class="hljs-attr">"videoId"</span>: String,
-            <span class="hljs-attr">"playlistId"</span>: String,
             <span class="hljs-attr">"name"</span>: String,
             <span class="hljs-attr">"artist"</span>: {
                 <span class="hljs-attr">"name"</span>: String,
@@ -128,9 +126,38 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
             ],
             <span class="hljs-attr">"params"</span>: <span class="hljs-string">"wAEB"</span>
         }
-    ]
+    ],
+    <span class="hljs-attr">"next"</span>: String
 }
 </code></pre>
+<h4 id="-api-yt-song-_videoid_">/api/yt/song/<em>videoId</em></h4>
+<p><em>get one song by id</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"type"</span>: <span class="hljs-string">"song"</span>,
+    <span class="hljs-attr">"videoId"</span>: String,
+    <span class="hljs-attr">"name"</span>: String,
+    <span class="hljs-attr">"artist"</span>: {
+        <span class="hljs-attr">"name"</span>: String,
+        <span class="hljs-attr">"browseId"</span>: String
+    },
+    <span class="hljs-attr">"album"</span>: {
+        <span class="hljs-attr">"name"</span>: String,
+        <span class="hljs-attr">"browseId"</span>: String
+    },
+    <span class="hljs-attr">"duration"</span>: Number,
+    <span class="hljs-attr">"thumbnails"</span>: [
+        {
+            <span class="hljs-attr">"url"</span>: String,
+            <span class="hljs-attr">"width"</span>: Number,
+            <span class="hljs-attr">"height"</span>: Number
+        }
+    ],
+    <span class="hljs-attr">"params"</span>: <span class="hljs-string">"wAEB"</span>
+}
+</code></pre>
+
 <h4 id="-api-yt-artists-_search-string_">/api/yt/artists/<em>search+string</em></h4>
 <p><em>contains offical artists</em></p>
 <h5 id="method-get">method: GET</h5>
@@ -149,7 +176,8 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
                 }
             ]
         }
-    ]
+    ],
+    <span class="hljs-attr">"next"</span>: String
 }
 </code></pre>
 <h4 id="-api-yt-artist-_browseid_">/api/yt/artist/<em>browseId</em></h4>
@@ -163,7 +191,7 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
     <span class="hljs-attr">"products"</span>: {
         <span class="hljs-attr">"songs"</span>: {
             <span class="hljs-attr">"content"</span>: [],
-            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"videoId"</span>: String,
             <span class="hljs-attr">"params"</span>: String
         },
         <span class="hljs-attr">"albums"</span>: {
@@ -178,10 +206,74 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
         },
         <span class="hljs-attr">"videos"</span>: {
             <span class="hljs-attr">"content"</span>: [],
-            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"videoId"</span>: String,
             <span class="hljs-attr">"params"</span>: String
         }
     },
+    <span class="hljs-attr">"thumbnails"</span>: [
+        {
+            <span class="hljs-attr">"url"</span>: String,
+            <span class="hljs-attr">"width"</span>: Number,
+            <span class="hljs-attr">"height"</span>: Number
+        }
+    ]
+}
+</code></pre>
+
+<h4 id="-api-yt-albums-_search-string_">/api/yt/albums/<em>search+string</em></h4>
+<p><em>contains offical albums</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"content"</span>: [
+        {
+            <span class="hljs-attr">"type"</span>: <span class="hljs-string">"album"</span>,
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"artist"</span>: String,
+            <span class="hljs-attr">"year"</span>: String,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ]
+        }
+    ],
+    <span class="hljs-attr">"next"</span>: String
+}
+</code></pre>
+<h4 id="-api-yt-album-_browseid_">/api/yt/album/<em>browseId</em></h4>
+<p><em>get one album by id</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"title"</span>: String,
+    <span class="hljs-attr">"description"</span>: String,
+    <span class="hljs-attr">"trackCount"</span>: Number,
+    <span class="hljs-attr">"year"</span>: String,
+    <span class="hljs-attr">"duration"</span>: Number,
+    <span class="hljs-attr">"artist"</span>: [
+        {
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"browseId"</span>: String,
+            <span class="hljs-attr">"thumbnails"</span>: [
+                 {
+                    <span class="hljs-attr">"url"</span>: String,
+                    <span class="hljs-attr">"width"</span>: Number,
+                    <span class="hljs-attr">"height"</span>: Number
+                }
+            ]
+        }
+    ],
+    <span class="hljs-attr">"tracks"</span>: [
+        {
+            <span class="hljs-attr">"name"</span>: String,
+            <span class="hljs-attr">"videoId"</span>: String,
+            <span class="hljs-attr">"duration"</span>: Number,
+        }
+    ],
     <span class="hljs-attr">"thumbnails"</span>: [
         {
             <span class="hljs-attr">"url"</span>: String,
@@ -214,12 +306,29 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
             <span class="hljs-attr">"params"</span>: String
         }
     ],
-    <span class="hljs-attr">"contination"</span>: {
-        <span class="hljs-attr">"continuation"</span>: String,
-        <span class="hljs-attr">"clickTrackingParams"</span>: String
-    }
+    <span class="hljs-attr">"next"</span>: String
 }
 </code></pre>
+<h4 id="-api-yt-video-_videoid_">/api/yt/video/<em>videoId</em></h4>
+<p><em>get one video by id</em></p>
+<h5 id="method-get">method: GET</h5>
+<h5 id="response-">response:</h5>
+<pre><code class="lang-js">{
+    <span class="hljs-attr">"type"</span>: String,
+    <span class="hljs-attr">"videoId"</span>: String,
+    <span class="hljs-attr">"name"</span>: String,
+    <span class="hljs-attr">"author"</span>: String,
+    <span class="hljs-attr">"views"</span>: String,
+    <span class="hljs-attr">"duration"</span>: Number,
+    <span class="hljs-attr">"thumbnails"</span>: {
+        <span class="hljs-attr">"url"</span>: String,
+        <span class="hljs-attr">"width"</span>: Number,
+        <span class="hljs-attr">"height"</span>: Number
+    },
+    <span class="hljs-attr">"params"</span>: String
+}
+</code></pre>
+
 <h4 id="-api-yt-playlists-_search-string_">/api/yt/playlists/<em>search+string</em></h4>
 <p><em>contains youtube playlists</em></p>
 <h5 id="method-get">method: GET</h5>
@@ -241,10 +350,7 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
             ]
         }
     ],
-    <span class="hljs-attr">"contination"</span>: {
-        <span class="hljs-attr">"continuation"</span>: String,
-        <span class="hljs-attr">"clickTrackingParams"</span>: String
-    }
+    <span class="hljs-attr">"next"</span>: String
 }
 </code></pre>
 <h4 id="-api-yt-playlist-_browseid_">/api/yt/playlist/<em>browseId</em></h4>
@@ -255,7 +361,7 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
     <span class="hljs-attr">"title"</span>: String,
     <span class="hljs-attr">"owner"</span>: String,
     <span class="hljs-attr">"trackCount"</span>: Number,
-    <span class="hljs-attr">"dateYear"</span>: String,
+    <span class="hljs-attr">"year"</span>: String,
     <span class="hljs-attr">"content"</span>: [
         {
             <span class="hljs-attr">"videoId"</span>: String,
@@ -279,12 +385,7 @@ Below is a list of endpoints you can use, with a non-exhaustive list of properti
             <span class="hljs-attr">"height"</span>: Number
         }
     ],
-    <span class="hljs-attr">"continuation"</span>: [
-        {
-            <span class="hljs-attr">"continuation"</span>: String,
-            <span class="hljs-attr">"clickTrackingParams"</span>: String
-        }
-    ]
+    <span class="hljs-attr">"next"</span>: String
 }
 </code></pre>
 

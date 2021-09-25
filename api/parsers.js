@@ -22,7 +22,7 @@ exports.parseSearchResult = (context) => {
                 result.content.push(Object.freeze({
                     type: _.lowerCase(_.nth(utils.fv(_.nth(flexColumn, 1), 'runs:text'), 0)),
                     videoId: utils.fv(sectionContext, 'playNavigationEndpoint:videoId'),
-                    playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
+                    // playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
                     name: utils.fv(_.nth(flexColumn, 0), 'runs:text'),
                     artist: (function() {
                         var a = [],
@@ -62,7 +62,7 @@ exports.parseSearchResult = (context) => {
                 result.content.push(Object.freeze({
                     type: _.lowerCase(_.nth(utils.fv(_.nth(flexColumn, 1), 'runs:text'), 0)),
                     videoId: utils.fv(sectionContext, 'playNavigationEndpoint:videoId'),
-                    playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
+                    // playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
                     name: utils.fv(_.nth(flexColumn, 0), 'runs:text'),
                     author: _.nth(utils.fv(_.nth(flexColumn, 1), 'runs:text'), 2),
                     views: _.nth(utils.fv(_.nth(flexColumn, 1), 'runs:text'), 4),
@@ -90,7 +90,7 @@ exports.parseSearchResult = (context) => {
                         ),
                         'browseEndpoint:browseId'
                     ),
-                    playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
+                    // playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
                     name: utils.fv(_.nth(flexColumn, 0), 'runs:text'),
                     artist: (_.nth(utils.fv(_.nth(flexColumn, 1), 'runs:text'), 2)),
                     year: _.nth(utils.fv(_.nth(flexColumn, 1), 'runs:text'), 4),
@@ -148,7 +148,7 @@ exports.parseSongSearchResult = (context) => {
         result.content.push({
             type: 'song',
             videoId: utils.fv(sectionContext, 'playNavigationEndpoint:videoId', true),
-            playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
+            // playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
             name: utils.fv(flexColumn[0], 'runs:text', true),
             artist: (function() {
                 var a = [],
@@ -178,7 +178,18 @@ exports.parseSongSearchResult = (context) => {
                 return 1 < a.length ? a : 0 < a.length ? a[0] : a
             })(),
             album: (function() {
-                var c = _.first(utils.fv(flexColumn[1], 'runs', true))
+                // Find the column where the browse id starts with MPREb_
+                let c = utils.fv(flexColumn[1], 'runs', true).filter(o => {
+                    // Skip the dividers
+                    if(o.hasOwnProperty('navigationEndpoint')) {
+                        if (o.navigationEndpoint.hasOwnProperty('browseEndpoint')) {
+                            const browseId = o.navigationEndpoint.browseEndpoint.browseId
+                            if (browseId.includes('MPREb_')) {
+                                return o
+                            }
+                        }
+                    }
+                })[0] // There should only be one, so take the first
                 if (!Array.isArray(c) && c instanceof Object) return {
                     name: utils.fv(c, 'text'),
                     browseId: utils.fv(c, 'browseEndpoint:browseId', true)
@@ -215,7 +226,7 @@ exports.parseVideoSearchResult = (context) => {
         result.content.push(Object.freeze({
             type: 'video',
             videoId: utils.fv(sectionContext, 'playNavigationEndpoint:videoId'),
-            playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
+            // playlistId: utils.fv(sectionContext, 'playNavigationEndpoint:playlistId'),
             name: utils.fv(_.nth(flexColumn, 0), 'runs:text'),
             author: _.nth(utils.fv(_.nth(flexColumn, 1), 'runs:text'), 0),
             views: _.nth(utils.fv(_.nth(flexColumn, 1), 'runs:text'), 2),
@@ -253,7 +264,7 @@ exports.parseAlbumSearchResult = (context) => {
                 ),
                 'browseEndpoint:browseId'
             ),
-            playlistId: utils.fv(sectionContext, 'toggledServiceEndpoint:playlistId', true),
+            // playlistId: utils.fv(sectionContext, 'toggledServiceEndpoint:playlistId', true),
             name: utils.fv(_.nth(flexColumn, 0), 'runs:text'),
             artist: _.join(_.filter(utils.fv(_.nth(flexColumn, 1), 'runs:text').slice(1, -1), v => ' • ' != v && true), ''),
             year: _.last(utils.fv(_.nth(flexColumn, 1), 'runs:text')),
@@ -386,6 +397,7 @@ exports.parseArtistPage = context => {
         ))
         result.products.songs.content.push({
             name: utils.fv(_.nth(flexColumn, 0), 'runs:text'),
+            videoId: utils.fv(_.nth(flexColumn, 0), 'runs:navigationEndpoint:watchEndpoint:videoId'),
             album: (function() {
                 var c = (utils.fv(_.nth(flexColumn, 2), 'runs'))
                 if (!Array.isArray(c) && c instanceof Object) return {
@@ -459,8 +471,7 @@ exports.parseArtistPage = context => {
                         case 'videos':
                             result.products[carouselName].content.push({
                                 type: 'video',
-                                videoId: utils.fv(_.at(itemContext[i], 'title'), 'watchEndpoint:videoId'),
-                                playlistId: utils.fv(_.at(itemContext[i], 'title'), 'watchEndpoint:playlistId'),
+                                videoId: utils.fv(_.at(itemContext[i], 'navigationEndpoint'), 'watchEndpoint:videoId'),
                                 name: utils.fv(_.at(itemContext[i], 'title'), 'text'),
                                 author: _.join(_.dropRight(utils.fv(_.at(itemContext[i], 'subtitle'), 'text'), 2), ''),
                                 views: _.nth(utils.fv(_.at(itemContext[i], 'subtitle'), 'text'), 2),
@@ -493,7 +504,7 @@ exports.parseArtistPage = context => {
                         result.products[carouselName].content.push({
                             type: 'video',
                             videoId: utils.fv(_.at(itemContext, 'title'), 'watchEndpoint:videoId'),
-                            playlistId: utils.fv(_.at(itemContext, 'title'), 'watchEndpoint:playlistId'),
+                            // playlistId: utils.fv(_.at(itemContext, 'title'), 'watchEndpoint:playlistId'),
                             name: utils.fv(_.at(itemContext, 'title'), 'text'),
                             author: _.join(_.dropRight(utils.fv(_.at(itemContext, 'subtitle'), 'text'), 2), ''),
                             views: _.nth(utils.fv(_.at(itemContext, 'subtitle'), 'text'), 2),
@@ -512,7 +523,7 @@ exports.parsePlaylistPage = context => {
         title: '',
         owner: '',
         trackCount: 0,
-        dateYear: '',
+        year: '',
         content: [],
         thumbnails: [],
         continuation: utils.fv(
@@ -527,7 +538,7 @@ exports.parsePlaylistPage = context => {
         result.title = utils.fv(_.at(pageHeader, 'title'), 'runs:text')
         result.owner = _.nth(utils.fv(_.at(pageHeader, 'subtitle'), 'runs:text'), 2)
         result.trackCount = parseInt(_.words(_.nth(utils.fv(_.at(pageHeader, 'secondSubtitle'), 'runs:text'), 0)))
-        result.dateYear = _.nth(utils.fv(_.at(pageHeader, 'subtitle'), 'runs:text'), 4)
+        result.year = _.nth(utils.fv(_.at(pageHeader, 'subtitle'), 'runs:text'), 4)
         result.thumbnails = utils.fv(pageHeader, 'croppedSquareThumbnailRenderer:thumbnails')
     }
 
@@ -607,11 +618,7 @@ exports.parseAlbumPage = context => {
         title: '',
         description: '',
         trackCount: 0,
-        date: {
-            year: 0,
-            month: 0,
-            day: 0
-        },
+        year: '',
         duration: 0,
         artist: [],
         tracks: [],
@@ -619,61 +626,74 @@ exports.parseAlbumPage = context => {
     }
 
     const albumRelease = utils.fv(
-        context, 'musicAlbumRelease'
+        context, 'musicDetailHeaderRenderer'
     )
-    result.title = albumRelease.title
-    result.trackCount = parseInt(albumRelease.trackCount)
-    result.date = albumRelease.releaseDate
-    result.duration = parseInt(albumRelease.durationMs)
-    result.playlistId = albumRelease.audioPlaylistId
-    result.thumbnails = utils.fv(albumRelease, 'thumbnailDetails:thumbnails')
+
+    result.title = _.get(albumRelease, 'title.runs[0].text');
+
+    const toArtistFromTextRun = ({ text, navigationEndpoint}) => {
+        if (text === ' & ') return ;
+        if (text === ', ') return ;
+
+        return {
+            name: text,
+            browseId: navigationEndpoint && utils.fv(navigationEndpoint, 'browseId'),
+        };
+    }
+
+    result.artist = albumRelease.subtitle.runs.slice(2, -2).reduce((result,item) => {
+        const artist = toArtistFromTextRun(item);
+
+        if (artist) {
+            result.push(artist);
+        }
+
+        return result;
+    }, []);
+
+
+    const serviceTrackingParams = utils.fv(context, 'serviceTrackingParams:params').reduce((result, { key, value}) => {
+        result[key] = value;
+        return result;
+    }, {});
+
+    result.browseId = serviceTrackingParams.browse_id;
+
+    result.trackCount = parseInt(_.get(albumRelease, 'secondSubtitle.runs[0].text').replace(' songs'));
+    result.year = _.get(albumRelease, 'subtitle.runs[4].text')
+    result.duration = utils.albumDurationToMs(_.get(albumRelease, 'secondSubtitle.runs[2].text'))
+
+    // result.playlistId = utils.fv(
+    //     albumRelease, 'topLevelButtons:playlistId'
+    // )
+
+    result.thumbnails = utils.fv(albumRelease, 'croppedSquareThumbnailRenderer:thumbnails');
 
     const albumReleaseDetail = utils.fv(
         context, 'musicAlbumReleaseDetail'
     )
-    result.description = albumReleaseDetail.description
 
-    const albumArtist = utils.fv(
-        context, 'musicArtist'
+    result.description = utils.fv(
+        albumRelease, 'description:text'
     )
-    if (albumArtist instanceof Array) {
-        for (let i = 0; i < albumArtist.length; i++) {
-            result.artist.push({
-                name: albumArtist[i].name,
-                browseId: albumArtist[i].externalChannelId,
-                thumbnails: utils.fv(albumArtist[i], 'thumbnailDetails:thumbnails')
-            })
-        }
-    } else if (albumArtist instanceof Object) {
-        result.artist.push({
-            name: albumArtist.name,
-            browseId: albumArtist.externalChannelId,
-            thumbnails: utils.fv(albumArtist, 'thumbnailDetails:thumbnails')
-        })
-    }
 
-    const albumTrack = utils.fv(
-        context, 'musicTrack'
+    const albumTracks = utils.fv(
+        context, 'musicResponsiveListItemRenderer'
     )
-    if (albumTrack instanceof Array) {
-        for (let i = 0; i < albumTrack.length; i++) {
-            result.tracks.push({
-                name: albumTrack[i].title,
-                videoId: albumTrack[i].videoId,
-                artistNames: albumTrack[i].artistNames,
-                duration: parseInt(albumTrack[i].lengthMs),
-                thumbnails: utils.fv(albumTrack[i], 'thumbnailDetails:thumbnails')
-            })
-        }
-    } else if (albumTrack instanceof Object) {
+
+    albumTracks.forEach((item) => {
         result.tracks.push({
-            name: albumTrack.title,
-            videoId: albumTrack.videoId,
-            artistNames: albumTrack.artistNames,
-            duration: parseInt(albumTrack.lengthMs),
-            thumbnails: utils.fv(albumTrack, 'thumbnailDetails:thumbnails')
-        })
-    }
+            name: utils.fv(item, 'flexColumns:0:runs:text'),
+            videoId: utils.fv(item, 'videoId')[0],
+            duration: utils.m2ms(_.get(item, 'fixedColumns[0].musicResponsiveListItemFixedColumnRenderer.text.runs[0].text'))
+
+            // artistNames: [].concat(utils.fv(item, 'flexColumns:1:runs'))
+            //     .map(toArtistFromTextRun)
+            //     .filter(Boolean)
+            //     .map(({ name }) => name),
+        });
+    });
+
     return result
 }
 
