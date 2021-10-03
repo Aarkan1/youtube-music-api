@@ -1,5 +1,10 @@
 Prefix the endpoints below with https://yt-music-api.herokuapp.com/
 
+## MIT License
+This api is purely for educational and personal projects and is not meant to be used commercially. If you want to create a commercial application you'll have to find another way.
+
+The author of this api does not take responsibility for how you use it. 
+
 ## /api/yt
 This part of the API exposes the YouTube music API.
 Below is a list of endpoints you can use, with a non-exhaustive list of properties.
