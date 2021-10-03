@@ -18,12 +18,14 @@
   },
   "homepage": "https://github.com/WeeHorse/node-music-web-api#readme",
   "dependencies": {
+    "axios": "^0.22.0",
     "bcrypt": "^5.0.0",
     "better-sqlite3": "^7.4.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "youtube-music-api": "^1.0.6"
+    "lodash": "^4.17.21",
+    "tough-cookie": "^4.0.0"
   }
 }

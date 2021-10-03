@@ -1,3 +1,5 @@
+This api is based on: https://github.com/emresenyuva/youtube-music-api
+
 Prefix the endpoints below with https://yt-music-api.herokuapp.com/
 
 ## MIT License
