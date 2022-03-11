@@ -4,7 +4,7 @@
   "description": "wrapping you tube music and sql through express to a unified whole",
   "main": "index.js",
   "scripts": {
-    "start": "node ./server/index.js",
+    "start": "node down.js",
     "test": "newman run tests/node-music-web-api.postman_collection.json"
   },
   "repository": {
